@@ -25,7 +25,8 @@
 
         body {
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             color: var(--dark-red);
             font-family: "Quicksand", sans-serif;
             background:
@@ -1114,6 +1115,24 @@
 
             .music-guide-text strong {
                 font-size: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                min-height: 100vh;
+                overflow-x: hidden;
+                overflow-y: auto;
+                padding-bottom: 80px;
+            }
+
+            .page {
+                min-height: 100vh;
+                height: auto;
+            }
+
+            .garden {
+                height: 600px;
             }
         }
     </style>
