@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick a Strawberry 🍓</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --red: #b92f4e;
+            --dark-red: #76243a;
+            --pink: #f8c8d5;
+            --cream: #fff8ed;
+            --green: #42634b;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            color: var(--dark-red);
+            font-family: "Quicksand", sans-serif;
+            background:
+                radial-gradient(circle at 20% 20%, #ffe3ea 0 7%, transparent 8%),
+                radial-gradient(circle at 80% 15%, #ffe3ea 0 5%, transparent 6%),
+                linear-gradient(180deg, #fff1f4 0%, #fbd9df 50%, #d8e7d2 100%);
+        }
+
+        /* -------------------- BACKGROUND -------------------- */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .sun {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            right: 8%;
+            top: 7%;
+            border-radius: 50%;
+            background: rgba(255, 220, 139, .45);
+            filter: blur(2px);
+            box-shadow: 0 0 80px rgba(255, 205, 100, .35);
+        }
+
+        .cloud {
+            position: absolute;
+            font-size: 55px;
+            opacity: .45;
+            animation: cloudMove 18s linear infinite;
+        }
+
+        .cloud.one {
+            top: 13%;
+            left: -100px;
+        }
+
+        .cloud.two {
+            top: 30%;
+            left: -200px;
+            animation-duration: 25s;
+            animation-delay: 5s;
+            font-size: 38px;
+        }
+
+        @keyframes cloudMove {
+            from {
+                transform: translateX(-150px);
+            }
+
+            to {
+                transform: translateX(calc(100vw + 300px));
+            }
+        }
+
+        /* FIRE FLIES */
+
+        .firefly {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff3a8;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #fff3a8;
+            animation: fly 4s ease-in-out infinite;
+        }
+
+        .f1 {
+            left: 10%;
+            top: 35%;
+            animation-delay: .3s;
+        }
+
+        .f2 {
+            left: 20%;
+            top: 65%;
+            animation-delay: 1.5s;
+        }
+
+        .f3 {
+            left: 75%;
+            top: 45%;
+            animation-delay: .8s;
+        }
+
+        .f4 {
+            left: 87%;
+            top: 70%;
+            animation-delay: 2s;
+        }
+
+        .f5 {
+            left: 55%;
+            top: 25%;
+            animation-delay: 1s;
+        }
+
+        .f6 {
+            left: 40%;
+            top: 75%;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes fly {
+
+            0%,
+            100% {
+                opacity: .2;
+                transform: translate(0, 0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(20px, -25px);
+            }
+        }
+
+        /* -------------------- MAIN -------------------- */
+
+        .page {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 35px 20px 0;
+        }
+
+        .top {
+            text-align: center;
+            z-index: 5;
+        }
+
+        .small-title {
+            font-family: "Caveat", cursive;
+            font-size: 22px;
+            color: #9d5266;
+        }
+
+        h1 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(40px, 7vw, 70px);
+            color: var(--red);
+            letter-spacing: -1px;
+            line-height: 1;
+            margin-top: 3px;
+            text-shadow: 0 3px 0 rgba(255, 255, 255, .5);
+        }
+
+        .subtitle {
+            margin-top: 12px;
+            color: #865567;
+            font-size: 14px;
+            letter-spacing: .5px;
+        }
+
+        .counter {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 17px;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, .55);
+            border: 1px solid rgba(255, 255, 255, .7);
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(115, 45, 65, .08);
+            backdrop-filter: blur(10px);
+            font-size: 12px;
+        }
+
+        .counter span {
+            font-weight: 700;
+            color: var(--red);
+        }
+
+        /* -------------------- GARDEN -------------------- */
+
+        .garden {
+            position: relative;
+            width: min(900px, 100%);
+            height: 550px;
+            margin-top: 5px;
+        }
+
+        /* ground */
+
+        .ground {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            width: 100vw;
+            height: 170px;
+            transform: translateX(-50%);
+            border-radius: 50% 50% 0 0;
+            background: linear-gradient(180deg, #91b383, #6f926b);
+            box-shadow: 0 -15px 40px rgba(50, 90, 50, .12);
+        }
+
+        /* flowers */
+
+        .flower {
+            position: absolute;
+            font-size: 25px;
+            animation: flowerFloat 3s ease-in-out infinite;
+        }
+
+        .flower.f1 {
+            left: 4%;
+            bottom: 50px;
+        }
+
+        .flower.f2 {
+            left: 17%;
+            bottom: 25px;
+            animation-delay: 1s;
+        }
+
+        .flower.f3 {
+            right: 15%;
+            bottom: 35px;
+            animation-delay: .4s;
+        }
+
+        .flower.f4 {
+            right: 4%;
+            bottom: 70px;
+            animation-delay: 1.4s;
+        }
+
+        @keyframes flowerFloat {
+
+            0%,
+            100% {
+                transform: rotate(-3deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(3deg) translateY(-5px);
+            }
+        }
+
+        /* ================================
+   STRAWBERRY EMOJI STYLE 🍓
+================================ */
+
+        .strawberry {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+
+            cursor: pointer;
+            z-index: 5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition:
+                transform 0.3s ease,
+                filter 0.3s ease;
+
+            animation: strawberryFloat 4s ease-in-out infinite;
+        }
+
+
+        /* Hilangkan strawberry CSS lama */
+
+        .strawberry .berry,
+        .strawberry .leaves {
+            display: none;
+        }
+
+
+        /* Strawberry emoji */
+
+        .strawberry::before {
+            content: "🍓";
+
+            font-size: 75px;
+            line-height: 1;
+
+            display: block;
+
+            filter:
+                drop-shadow(0 10px 8px rgba(90, 25, 40, 0.18));
+
+            transition:
+                transform 0.3s ease,
+                filter 0.3s ease;
+        }
+
+
+        /* Hover */
+
+        .strawberry:hover {
+            transform:
+                translateY(-10px) scale(1.12) rotate(-4deg);
+
+            z-index: 20;
+        }
+
+        .strawberry:hover::before {
+            transform: rotate(5deg);
+
+            filter:
+                drop-shadow(0 14px 10px rgba(90, 25, 40, 0.2));
+        }
+
+
+        /* Setelah dipetik */
+
+        .strawberry.picked {
+            transform:
+                scale(0.5) translateY(35px);
+
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+
+        /* Floating animation */
+
+        @keyframes strawberryFloat {
+
+            0%,
+            100% {
+                margin-top: 0;
+            }
+
+            50% {
+                margin-top: -7px;
+            }
+
+        }
+
+
+        /* ================================
+   POSISI STRAWBERRY
+================================ */
+
+        .s1 {
+            left: 8%;
+            top: 12%;
+            transform: rotate(-5deg);
+            animation-delay: 0s;
+        }
+
+        .s2 {
+            left: 34%;
+            top: 7%;
+            transform: rotate(4deg);
+            animation-delay: .6s;
+        }
+
+        .s3 {
+            right: 8%;
+            top: 13%;
+            transform: rotate(5deg);
+            animation-delay: 1.2s;
+        }
+
+        .s4 {
+            left: 18%;
+            top: 45%;
+            transform: rotate(-3deg);
+            animation-delay: 1.8s;
+        }
+
+        .s5 {
+            right: 25%;
+            top: 44%;
+            transform: rotate(4deg);
+            animation-delay: 2.4s;
+        }
+
+        .s6 {
+            left: 4%;
+            top: 69%;
+            transform: rotate(-5deg);
+            animation-delay: 3s;
+        }
+
+        .s7 {
+            right: 5%;
+            top: 68%;
+            transform: rotate(5deg);
+            animation-delay: 3.5s;
+        }
+
+
+        /* ================================
+   MOBILE
+================================ */
+
+        @media (max-width: 600px) {
+
+            .strawberry {
+                width: 70px;
+                height: 70px;
+            }
+
+            .strawberry::before {
+                font-size: 58px;
+            }
+
+            .s1 {
+                left: -2%;
+                top: 8%;
+            }
+
+            .s2 {
+                left: 31%;
+                top: 4%;
+            }
+
+            .s3 {
+                right: -2%;
+                top: 9%;
+            }
+
+            .s4 {
+                left: 5%;
+                top: 40%;
+            }
+
+            .s5 {
+                right: 5%;
+                top: 41%;
+            }
+
+            .s6 {
+                left: -3%;
+                top: 67%;
+            }
+
+            .s7 {
+                right: -3%;
+                top: 66%;
+            }
+        }
+
+        /* -------------------- BASKET -------------------- */
+
+        .basket {
+            position: absolute;
+            right: 50%;
+            bottom: 15px;
+            transform: translateX(50%);
+            width: 150px;
+            height: 105px;
+            z-index: 30;
+        }
+
+        /* Handle berada di belakang buah */
+        .basket-handle {
+            position: absolute;
+            width: 90px;
+            height: 60px;
+            left: 30px;
+            bottom: 35px;
+
+            border: 8px solid #9d5938;
+            border-bottom: 0;
+            border-radius: 50px 50px 0 0;
+
+            z-index: 1;
+        }
+
+        /* Tempat buah terlihat */
+        .basket-fruits {
+            position: absolute;
+            left: 0;
+            bottom: 18px;
+            width: 150px;
+            height: 65px;
+
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Strawberry yang sudah masuk */
+        .basket-fruit {
+            position: absolute;
+
+            font-size: 30px;
+            line-height: 1;
+
+            pointer-events: none;
+
+            filter: drop-shadow(0 4px 4px rgba(80, 20, 30, .18));
+
+            animation: basketPop .35s ease-out;
+
+            z-index: 10;
+        }
+
+        /* Posisi strawberry di dalam keranjang */
+
+        .basket-fruit:nth-child(1) {
+            left: 18px;
+            bottom: 18px;
+            transform: rotate(-12deg);
+        }
+
+        .basket-fruit:nth-child(2) {
+            left: 42px;
+            bottom: 27px;
+            transform: rotate(8deg);
+        }
+
+        .basket-fruit:nth-child(3) {
+            left: 68px;
+            bottom: 19px;
+            transform: rotate(-5deg);
+        }
+
+        .basket-fruit:nth-child(4) {
+            left: 94px;
+            bottom: 26px;
+            transform: rotate(10deg);
+        }
+
+        .basket-fruit:nth-child(5) {
+            left: 32px;
+            bottom: 5px;
+            transform: rotate(-8deg);
+        }
+
+        .basket-fruit:nth-child(6) {
+            left: 60px;
+            bottom: 4px;
+            transform: rotate(6deg);
+        }
+
+        .basket-fruit:nth-child(7) {
+            left: 87px;
+            bottom: 7px;
+            transform: rotate(-10deg);
+        }
+
+
+        /* Keranjang berada di DEPAN bagian bawah strawberry */
+        .basket-top {
+            position: absolute;
+
+            width: 150px;
+            height: 55px;
+
+            left: 0;
+            bottom: 0;
+
+            background: repeating-linear-gradient(90deg,
+                    #b86e45 0 10px,
+                    #c98050 10px 18px);
+
+            border-radius: 8px 8px 30px 30px;
+            border: 4px solid #9d5938;
+
+            box-shadow:
+                0 10px 20px rgba(80, 40, 20, .18);
+
+            z-index: 20;
+        }
+
+
+        /* --------------------
+   STRAWBERRY TERBANG
+-------------------- */
+
+        .flying-strawberry {
+            position: fixed;
+
+            z-index: 9999;
+
+            font-size: 75px;
+            line-height: 1;
+
+            pointer-events: none;
+
+            transform-origin: center;
+
+            filter:
+                drop-shadow(0 8px 8px rgba(80, 20, 30, .18));
+
+            transition:
+                left .75s cubic-bezier(.2, .8, .2, 1),
+                top .75s cubic-bezier(.2, .8, .2, 1),
+                transform .75s cubic-bezier(.2, .8, .2, 1);
+        }
+
+
+        /* Animasi saat buah masuk */
+        @keyframes basketPop {
+
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* -------------------- MODE BUTTON -------------------- */
+
+        .mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            border: 0;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .6);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 8px 20px rgba(80, 30, 50, .1);
+            transition: .3s;
+        }
+
+        .mode:hover {
+            transform: rotate(20deg) scale(1.1);
+        }
+
+        /* -------------------- NOTE POPUP -------------------- */
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(54, 20, 30, .32);
+            backdrop-filter: blur(9px);
+            opacity: 0;
+            pointer-events: none;
+            transition: .35s;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .note {
+            width: min(430px, 100%);
+            padding: 42px 35px 35px;
+            position: relative;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 220, 160, .3), transparent 30%),
+                #fff9ee;
+            border-radius: 5px;
+            box-shadow:
+                0 30px 70px rgba(30, 10, 20, .25),
+                0 3px 0 rgba(130, 70, 40, .1);
+            transform: translateY(30px) rotate(1deg) scale(.9);
+            transition: .4s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .overlay.show .note {
+            transform: translateY(0) rotate(-1deg) scale(1);
+        }
+
+        .note::before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            width: 45px;
+            height: 15px;
+            transform: translateX(-50%) rotate(-3deg);
+            background: #eeb6a8;
+            opacity: .7;
+        }
+
+        .note-label {
+            font-family: "Caveat", cursive;
+            font-size: 19px;
+            color: #b47b65;
+        }
+
+        .note h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: 31px;
+            color: #9e304a;
+            margin: 7px 0 17px;
+        }
+
+        .note-message {
+            font-family: "Caveat", cursive;
+            font-size: 25px;
+            line-height: 1.45;
+            color: #704452;
+            min-height: 115px;
+        }
+
+        .note button {
+            border: 0;
+            background: #b93659;
+            color: white;
+            padding: 11px 21px;
+            border-radius: 25px;
+            font-family: "Quicksand", sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 18px;
+            transition: .25s;
+        }
+
+        .note button:hover {
+            background: #85243e;
+            transform: translateY(-2px);
+        }
+
+        /* -------------------- FINAL -------------------- */
+
+        .final {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px;
+            background:
+                radial-gradient(circle at center, #ffe8ee, #f3b7c5);
+            opacity: 0;
+            pointer-events: none;
+            transition: 1s;
+        }
+
+        .final.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .final-berry {
+            font-size: 90px;
+            animation: heartbeat 1.5s infinite;
+            filter: drop-shadow(0 12px 15px rgba(120, 30, 50, .15));
+        }
+
+        .final h2 {
+            font-family: "DM Serif Display", serif;
+            font-size: clamp(38px, 7vw, 62px);
+            color: #a42d49;
+            margin: 15px 0;
+        }
+
+        .final p {
+            max-width: 480px;
+            font-family: "Caveat", cursive;
+            font-size: 25px;
+            line-height: 1.45;
+            color: #6e4050;
+        }
+
+        .final small {
+            margin-top: 25px;
+            color: #9d6272;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.13);
+            }
+        }
+
+        /* -------------------- SPARKLES -------------------- */
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 200;
+            animation: sparkle .9s forwards;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: scale(0) translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.5) translateY(-70px);
+            }
+        }
+
+        /* -------------------- NIGHT MODE -------------------- */
+
+        body.night {
+            background:
+                radial-gradient(circle at 80% 15%, #fff0b5 0 2%, transparent 3%),
+                linear-gradient(180deg, #211c35 0%, #3d2944 50%, #1f3027 100%);
+            color: #ffeaf0;
+        }
+
+        body.night h1 {
+            color: #ffc2d1;
+        }
+
+        body.night .subtitle,
+        body.night .small-title {
+            color: #e7a9bb;
+        }
+
+        body.night .counter {
+            background: rgba(255, 255, 255, .1);
+            color: #ffeaf0;
+        }
+
+        body.night .ground {
+            background: linear-gradient(180deg, #3e6546, #253c2c);
+        }
+
+        body.night .sun {
+            background: #fff2bd;
+            box-shadow: 0 0 70px #fff2bd;
+        }
+
+        body.night .cloud {
+            opacity: .08;
+        }
+
+        /* -------------------- MOBILE -------------------- */
+
+        @media (max-width: 600px) {
+
+            .page {
+                padding-top: 28px;
+            }
+
+            .mode {
+                top: 14px;
+                right: 14px;
+            }
+
+            .garden {
+                height: 560px;
+            }
+
+            .strawberry {
+                transform: scale(.78);
+            }
+
+            .strawberry:hover {
+                transform: scale(.88) translateY(-8px);
+            }
+
+            .s1 {
+                left: -3%;
+                top: 8%;
+            }
+
+            .s2 {
+                left: 32%;
+                top: 2%;
+            }
+
+            .s3 {
+                right: -3%;
+                top: 10%;
+            }
+
+            .s4 {
+                left: 7%;
+                top: 39%;
+            }
+
+            .s5 {
+                right: 8%;
+                top: 42%;
+            }
+
+            .s6 {
+                left: -5%;
+                top: 68%;
+            }
+
+            .s7 {
+                right: -5%;
+                top: 69%;
+            }
+
+            .berry {
+                width: 78px;
+                height: 93px;
+            }
+
+            .leaves {
+                transform: scale(.9);
+            }
+
+            .note {
+                padding: 38px 25px 28px;
+            }
+
+            .note-message {
+                font-size: 23px;
+            }
+
+            .basket {
+                transform: translateX(50%) scale(.8);
+            }
+        }
+
+        /* -------------------- MUSIC BUTTON -------------------- */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 30;
+
+            width: 42px;
+            height: 42px;
+
+            border: 0;
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, .6);
+            backdrop-filter: blur(8px);
+
+            cursor: pointer;
+            font-size: 18px;
+
+            box-shadow: 0 8px 20px rgba(80, 30, 50, .1);
+
+            transition: .3s;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 600px) {
+            .music-btn {
+                top: 14px;
+                left: 14px;
+            }
+        }
+
+        /* =========================
+   WRONG CLICK MESSAGE
+========================= */
+
+        .wrong-click-message {
+            position: fixed;
+            left: 50%;
+            bottom: 80px;
+            transform: translateX(-50%);
+
+            padding: 10px 18px;
+            border-radius: 20px;
+
+            background: rgba(255, 255, 255, 0.88);
+            color: #633b4d;
+
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+            z-index: 9999;
+
+            animation: messagePop 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .wrong-click-message.hide {
+            opacity: 0;
+            transform: translateX(-50%) translateY(8px);
+        }
+
+        @keyframes messagePop {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+        }
+
+        /* =========================
+   MUSIC GUIDE
+========================= */
+
+        .music-guide {
+            position: fixed;
+            top: 72px;
+            left: 20px;
+            z-index: 1000;
+
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+
+            animation: guideFloat 2s ease-in-out infinite;
+        }
+
+        .music-guide-text {
+            display: flex;
+            flex-direction: column;
+
+            padding: 10px 14px;
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, 0.92);
+            color: #633b4d;
+
+            box-shadow: 0 8px 25px rgba(80, 30, 50, 0.15);
+
+            font-family: "Quicksand", sans-serif;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .music-guide-text strong {
+            font-size: 13px;
+            color: #b93659;
+        }
+
+        .music-guide-text span {
+            margin-top: 2px;
+            color: #85606d;
+        }
+
+
+
+        @keyframes guideFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(5px);
+            }
+        }
+
+        /* Hilang setelah musik dinyalakan */
+        .music-guide.hide {
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: .4s ease;
+        }
+
+        @media (max-width: 600px) {
+            .music-guide {
+                top: 62px;
+                left: 14px;
+            }
+
+            .music-guide-text {
+                font-size: 11px;
+            }
+
+            .music-guide-text strong {
+                font-size: 12px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <button class="music-btn" id="musicButton" onclick="toggleMusic()">
+        🎵
+    </button>
+
+    <!-- MUSIC GUIDE -->
+    <div class="music-guide" id="musicGuide">
+        <div class="music-guide-text">
+            <strong>redd please turn on the music ♫</strong>
+            <span>click the little button up there</span>
+        </div>
+
+
+    </div>
+
+    <audio id="bgMusic" loop autoplay>
+        <source src="./SadGirl.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- BACKGROUND -->
+    <div class="background">
+
+        <div class="sun"></div>
+
+        <div class="cloud one">☁️</div>
+        <div class="cloud two">☁️</div>
+
+        <div class="firefly f1"></div>
+        <div class="firefly f2"></div>
+        <div class="firefly f3"></div>
+        <div class="firefly f4"></div>
+        <div class="firefly f5"></div>
+        <div class="firefly f6"></div>
+
+    </div>
+
+    <!-- DAY / NIGHT BUTTON -->
+    <button class="mode" onclick="toggleMode()" id="modeButton">
+        🌙
+    </button>
+
+
+    <main class="page">
+
+        <div class="top">
+
+            <div class="small-title">
+                a tiny garden for you
+            </div>
+
+            <h1>Pick a Strawberry</h1>
+
+            <p class="subtitle">
+                Somewhere in this garden, there are seven little messages.
+            </p>
+
+            <div class="counter">
+                🍓
+                <span id="count">0</span>
+                / 7 picked
+            </div>
+
+        </div>
+
+
+        <!-- GARDEN -->
+        <div class="garden">
+
+            <div class="ground"></div>
+
+            <div class="flower f1">🌼</div>
+            <div class="flower f2">🌷</div>
+            <div class="flower f3">🌸</div>
+            <div class="flower f4">🌼</div>
+
+
+            <!-- STRAWBERRY 1 -->
+            <div class="strawberry s1" data-id="0">
+
+                <div class="leaves">
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                </div>
+
+                <div class="berry"></div>
+
+            </div>
+
+
+            <!-- STRAWBERRY 2 -->
+            <div class="strawberry s2" data-id="1">
+
+                <div class="leaves">
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                </div>
+
+                <div class="berry"></div>
+
+            </div>
+
+
+            <!-- STRAWBERRY 3 -->
+            <div class="strawberry s3" data-id="2">
+
+                <div class="leaves">
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                </div>
+
+                <div class="berry"></div>
+
+            </div>
+
+
+            <!-- STRAWBERRY 4 -->
+            <div class="strawberry s4" data-id="3">
+
+                <div class="leaves">
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                </div>
+
+                <div class="berry"></div>
+
+            </div>
+
+
+            <!-- STRAWBERRY 5 -->
+            <div class="strawberry s5" data-id="4">
+
+                <div class="leaves">
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                </div>
+
+                <div class="berry"></div>
+
+            </div>
+
+
+            <!-- STRAWBERRY 6 -->
+            <div class="strawberry s6" data-id="5">
+
+                <div class="leaves">
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                </div>
+
+                <div class="berry"></div>
+
+            </div>
+
+
+            <!-- STRAWBERRY 7 -->
+            <div class="strawberry s7" data-id="6">
+
+                <div class="leaves">
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                    <div class="leaf"></div>
+                </div>
+
+                <div class="berry"></div>
+
+            </div>
+
+
+            <!-- BASKET -->
+            <div class="basket">
+
+                <div class="basket-handle"></div>
+
+                <!-- Buah yang sudah dikumpulkan -->
+                <div class="basket-fruits"></div>
+
+                <div class="basket-top"></div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- NOTE POPUP -->
+
+    <div class="overlay" id="overlay">
+
+        <div class="note">
+
+            <div class="note-label">
+                a little note 🍓
+            </div>
+
+            <h2 id="noteTitle">
+                Strawberry
+            </h2>
+
+            <p class="note-message" id="noteMessage"></p>
+
+            <button onclick="closeNote()">
+                pick another 🍓
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- FINAL SCREEN -->
+
+    <div class="final" id="final">
+
+        <div class="final-berry">
+            🍓
+        </div>
+
+        <h2>You found them all.</h2>
+
+        <p>
+            Seven strawberries.<br>
+            Seven little messages.<br><br>
+
+            But here's the one I really wanted
+            you to find and don't tell anyone...
+            <br><br>
+
+            <strong>
+                i really loove ur redd hair ♡
+            </strong>
+        </p>
+
+        <small>
+            <small>
+                made with a little bit of code & a mind full of Red
+            </small>
+        </small>
+
+    </div>
+
+
+    <script>
+
+        const bgMusic = document.getElementById("bgMusic");
+
+        bgMusic.volume = 0.5;
+
+        // Coba langsung saat halaman dibuka
+        window.addEventListener("load", () => {
+            bgMusic.play().catch(() => {
+                console.log("Autoplay diblokir. Menunggu interaksi user...");
+            });
+        });
+
+        // Kalau autoplay diblokir,
+        // lagu langsung mulai saat user pertama kali klik/touch
+        function startMusic() {
+            bgMusic.play().catch(() => { });
+
+            document.removeEventListener("click", startMusic);
+            document.removeEventListener("touchstart", startMusic);
+        }
+
+        document.addEventListener("click", startMusic);
+        document.addEventListener("touchstart", startMusic);
+
+        /* =========================
+           MESSAGES
+        ========================= */
+
+        const messages = [
+
+            {
+                title: "The Red One",
+                text: "Your hair is impossible to ignore. I think the red suits you way too well."
+            },
+
+            {
+                title: "A Tiny Reminder",
+                text: "You don't have to have everything figured out. You're doing better than you think."
+            },
+
+            {
+                title: "Just Because",
+                text: "No special reason for this strawberry. I just wanted to leave something here that might make you smile."
+            },
+
+            {
+                title: "A Random Thought",
+                text: "I like how you can have this cool, masc energy and still have the softest little feminine moments."
+            },
+
+            {
+                title: "Small Detail",
+                text: "I like your piercing too. It's a small thing, but it looks really good on you."
+            },
+
+            {
+                title: "Little Things",
+                text: "I don't always say it, but I really like the little things about you."
+            },
+
+            {
+                title: "The Last Strawberry",
+                text: "I like your smile. Especially when you're trying not to smile because you're feeling shy."
+            }
+
+        ];
+
+
+        /* =========================
+           VARIABLES
+        ========================= */
+
+        let picked = 0;
+
+        const strawberries =
+            document.querySelectorAll(".strawberry");
+
+        const overlay =
+            document.getElementById("overlay");
+
+        const noteTitle =
+            document.getElementById("noteTitle");
+
+        const noteMessage =
+            document.getElementById("noteMessage");
+
+        const count =
+            document.getElementById("count");
+
+        const final =
+            document.getElementById("final");
+
+
+        /* =========================
+           STRAWBERRY CLICK
+        ========================= */
+
+        strawberries.forEach(strawberry => {
+            strawberry.addEventListener("click", function (event) {
+
+                if (this.classList.contains("picked")) {
+                    return;
+                }
+
+                // =========================
+                // NYALAKAN MUSIK SAAT STRAWBERRY DIKLIK
+                // =========================
+                if (bgMusic.paused) {
+                    bgMusic.play().then(() => {
+                        document.getElementById("musicButton").textContent = "🎵";
+                    }).catch(() => { });
+                }
+
+                // Hilangkan petunjuk musik
+                document.getElementById("musicGuide").classList.add("hide");
+
+                const id = this.dataset.id;
+
+                /* =========================
+                   AMBIL POSISI STRAWBERRY
+                ========================= */
+
+                const start =
+                    this.getBoundingClientRect();
+
+                /* =========================
+                   AMBIL POSISI KERANJANG
+                ========================= */
+
+                const basket =
+                    document.querySelector(".basket");
+
+                const basketRect =
+                    basket.getBoundingClientRect();
+
+
+                /* =========================
+                   BUAT STRAWBERRY TERBANG
+                ========================= */
+
+                const flying =
+                    document.createElement("div");
+
+                flying.className =
+                    "flying-strawberry";
+
+                flying.textContent = "🍓";
+
+
+                flying.style.left =
+                    start.left +
+                    start.width / 2 -
+                    37 +
+                    "px";
+
+                flying.style.top =
+                    start.top +
+                    start.height / 2 -
+                    37 +
+                    "px";
+
+
+                document.body.appendChild(flying);
+
+
+                /* =========================
+                   HILANGKAN STRAWBERRY ASLI
+                ========================= */
+
+                this.classList.add("picked");
+
+
+                /* =========================
+                   SPARKLE DI TEMPAT DIKLIK
+                ========================= */
+
+                createSparkles(
+                    event.clientX,
+                    event.clientY
+                );
+
+
+                /* =========================
+                   TERBANG KE KERANJANG
+                ========================= */
+
+                requestAnimationFrame(() => {
+
+                    flying.style.left =
+                        basketRect.left +
+                        basketRect.width / 2 -
+                        16 +
+                        "px";
+
+                    flying.style.top =
+                        basketRect.top +
+                        basketRect.height / 2 -
+                        18 +
+                        "px";
+
+                    flying.style.transform =
+                        "scale(.38) rotate(20deg)";
+
+                });
+
+
+                /* =========================
+                   SETELAH SAMPAI KERANJANG
+                ========================= */
+
+                setTimeout(() => {
+
+                    flying.remove();
+
+
+                    const basketFruit =
+                        document.createElement("div");
+
+                    basketFruit.className =
+                        "basket-fruit";
+
+                    basketFruit.textContent = "🍓";
+
+                    const basketFruits =
+                        basket.querySelector(".basket-fruits");
+
+                    basketFruits.appendChild(
+                        basketFruit
+                    );
+
+
+                    /* =========================
+                       UPDATE COUNTER
+                    ========================= */
+
+                    picked++;
+
+                    count.textContent =
+                        picked;
+
+
+                    /* =========================
+                       TAMPILKAN PESAN
+                    ========================= */
+
+                    noteTitle.textContent =
+                        messages[id].title;
+
+                    noteMessage.textContent =
+                        messages[id].text;
+
+                    overlay.classList.add("show");
+
+
+                }, 780);
+
+            });
+
+        });
+
+
+        /* =========================
+           CLOSE NOTE
+        ========================= */
+
+        function closeNote() {
+
+            overlay.classList.remove("show");
+
+            if (picked === 7) {
+
+                setTimeout(() => {
+
+                    final.classList.add("show");
+
+                    createFinalSparkles();
+
+                }, 600);
+
+            }
+
+        }
+
+
+        /* =========================
+           SPARKLES
+        ========================= */
+
+        function createSparkles(x, y) {
+
+            const symbols = [
+                "✦",
+                "✧",
+                "♡",
+                "✿",
+                "🍓"
+            ];
+
+            for (let i = 0; i < 9; i++) {
+
+                const sparkle =
+                    document.createElement("div");
+
+                sparkle.className = "sparkle";
+
+                sparkle.textContent =
+                    symbols[
+                    Math.floor(
+                        Math.random() * symbols.length
+                    )
+                    ];
+
+                sparkle.style.left =
+                    x + (Math.random() * 100 - 50) + "px";
+
+                sparkle.style.top =
+                    y + (Math.random() * 100 - 50) + "px";
+
+                sparkle.style.fontSize =
+                    (12 + Math.random() * 17) + "px";
+
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 900);
+
+            }
+
+        }
+
+
+        /* =========================
+           FINAL SPARKLES
+        ========================= */
+
+        function createFinalSparkles() {
+
+            for (let i = 0; i < 45; i++) {
+
+                setTimeout(() => {
+
+                    const sparkle =
+                        document.createElement("div");
+
+                    sparkle.className = "sparkle";
+
+                    sparkle.textContent =
+                        ["♡", "✦", "🍓", "✧", "🌸"]
+                        [
+                        Math.floor(
+                            Math.random() * 5
+                        )
+                        ];
+
+                    sparkle.style.left =
+                        Math.random() *
+                        window.innerWidth + "px";
+
+                    sparkle.style.top =
+                        Math.random() *
+                        window.innerHeight + "px";
+
+                    sparkle.style.fontSize =
+                        (15 + Math.random() * 20) + "px";
+
+                    document.body.appendChild(sparkle);
+
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 900);
+
+                }, i * 60);
+
+            }
+
+        }
+
+
+        /* =========================
+   DAY / NIGHT
+========================= */
+
+        function toggleMode() {
+            document.body.classList.toggle("night");
+
+            const button = document.getElementById("modeButton");
+
+            if (document.body.classList.contains("night")) {
+                button.textContent = "☀️";
+            } else {
+                button.textContent = "🌙";
+            }
+        }
+
+
+        /* =========================
+           MUSIC ON / OFF
+        ========================= */
+
+        function toggleMusic() {
+            const musicButton = document.getElementById("musicButton");
+            const musicGuide = document.getElementById("musicGuide");
+
+            if (bgMusic.paused) {
+
+                bgMusic.play().then(() => {
+                    musicButton.textContent = "🎵";
+
+                    // Hilangkan petunjuk
+                    musicGuide.classList.add("hide");
+
+                }).catch(() => { });
+
+            } else {
+
+                bgMusic.pause();
+                musicButton.textContent = "🔇";
+
+            }
+        }
+        /* =========================
+     WRONG CLICK MESSAGE
+  ========================= */
+
+        document.addEventListener("click", function (event) {
+
+            // Kalau FINAL SCREEN sudah muncul,
+            // jangan tampilkan pesan lagi
+            if (final.classList.contains("show")) {
+                return;
+            }
+
+            // Kalau klik strawberry, jangan munculkan pesan
+            if (event.target.closest(".strawberry")) {
+                return;
+            }
+
+            // Kalau klik di dalam note/popup,
+            // jangan munculkan pesan
+            if (event.target.closest(".note")) {
+                return;
+            }
+
+            // Kalau klik tombol music / mode,
+            // jangan munculkan pesan
+            if (
+                event.target.closest("#musicButton") ||
+                event.target.closest("#modeButton")
+            ) {
+                return;
+            }
+
+            // Buat pesan
+            const message = document.createElement("div");
+            message.className = "wrong-click-message";
+            message.textContent = "redd.. just click the strawberries. 🍓";
+
+            document.body.appendChild(message);
+
+            // Hilangkan setelah 1.5 detik
+            setTimeout(() => {
+                message.classList.add("hide");
+
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            }, 1500);
+        });
+
+    </script>
+
+</body>
+
+</html>
